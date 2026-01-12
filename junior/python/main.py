@@ -5,9 +5,30 @@ import json
 def calculate_panels(panel_width: int, panel_height: int, 
                     roof_width: int, roof_height: int) -> int:
     
-    # Implementa acá tu solución
+    cantidad = 0
+    if panel_height > roof_height or panel_width > roof_width:
+        return cantidad
+    cantx = roof_height // panel_height
+    canty = roof_width // panel_width
+
+    roof_base_h = cantx*panel_height
+    roof_base_w = canty*panel_width
+
+    cantidad = cantx*canty
+
+    if roof_base_h == roof_height and roof_base_w == roof_width:
+        return cantidad
+    roof_down_h = roof_height - roof_base_h
+    roof_down_w = roof_width
+
+    roof_right_h = roof_base_h
+    roof_right_w = roof_width - roof_base_w
+
+    cantidad += calculate_panels(panel_height, panel_width, roof_right_w, roof_right_h)
+    cantidad += calculate_panels(panel_height, panel_width, roof_down_w, roof_down_h)
+
+    return cantidad
     
-    return 0
 
 
 def run_tests() -> None:
